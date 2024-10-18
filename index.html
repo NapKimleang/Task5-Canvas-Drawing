@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nap Kimleang - Canvas Star Drawing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #58a8ea, #4e98d3); /* Gradient background */
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Text shadow for the heading */
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            border: 2px solid #fff; /* White border for the canvas */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Shadow for the canvas */
+            background-color: #fff; /* White background for the canvas */
+            transition: transform 0.2s; /* Animation effect */
+        }
+
+        canvas:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Canvas Star Drawing</h1>
+    <canvas id="myCanvas" width="300" height="300"></canvas>
+
+    <script>
+        // Get the canvas element and its drawing context
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Function to draw a star
+        function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+            var rot = (Math.PI / 2) * 3; // Rotation angle
+            var x = cx; // Center x
+            var y = cy; // Center y
+            var step = Math.PI / spikes; // Step size
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius); // Start point
+
+            // Loop to create the star shape
+            for (var i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step; // Rotate by step size
+
+                x = cx + Math.cos(rot) * innerRadius; // Inner radius point
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step; // Rotate again
+            }
+            ctx.lineTo(cx, cy - outerRadius); // Close the star shape
+            ctx.closePath();
+            ctx.fillStyle = "gold"; // Fill color for the star
+            ctx.fill(); // Fill the star
+            
+            // Adding a shadow effect to the star
+            ctx.lineWidth = 3; // Outline width
+            ctx.strokeStyle = "orange"; // Outline color
+            ctx.stroke(); // Draw the outline
+        }
+
+        // Draw a star at the center of the canvas
+        drawStar(ctx, 150, 150, 5, 80, 40);
+    </script>
+</body>
+</html>
